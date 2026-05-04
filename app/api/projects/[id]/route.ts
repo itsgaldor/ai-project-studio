@@ -11,7 +11,7 @@ import type { ApiResponse, Project, ProjectUpdateInput } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
-type RouteContext = { params: { id: string } };
+type RouteContext = { params: Promise<{ id: string }> };
 
 // ─── GET /api/projects/[id] ───────────────────────────────────
 
@@ -20,7 +20,7 @@ export async function GET(
   { params }: RouteContext
 ): Promise<NextResponse<ApiResponse<Project>>> {
   const requestId = crypto.randomUUID();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const project = await getProjectById(id);
@@ -52,7 +52,7 @@ export async function PATCH(
   { params }: RouteContext
 ): Promise<NextResponse<ApiResponse<Project>>> {
   const requestId = crypto.randomUUID();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const body: ProjectUpdateInput = await req.json().catch(() => ({}));
@@ -106,7 +106,7 @@ export async function DELETE(
   { params }: RouteContext
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   const requestId = crypto.randomUUID();
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const existing = await getProjectById(id);
@@ -128,9 +128,4 @@ export async function DELETE(
     });
   } catch (error) {
     console.error("[Projects/:id DELETE] Error:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to archive project", meta: { request_id: requestId } },
-      { status: 500 }
-    );
-  }
-}
+   
