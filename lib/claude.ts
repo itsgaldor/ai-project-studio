@@ -75,6 +75,7 @@ export async function claudeChat(
 export async function claudeHealthCheck(): Promise<{
   ok: boolean;
   latency_ms: number;
+  error?: string;
 }> {
   const start = Date.now();
   try {
@@ -84,8 +85,9 @@ export async function claudeHealthCheck(): Promise<{
     );
     return { ok: true, latency_ms: Date.now() - start };
   } catch (err) {
-    console.error('[Claude] healthCheck error:', err instanceof Error ? err.message : String(err));
-    return { ok: false, latency_ms: Date.now() - start };
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error('[Claude] healthCheck error:', msg);
+    return { ok: false, latency_ms: Date.now() - start, error: msg };
   }
 }
 

@@ -40,7 +40,7 @@ export async function GET(): Promise<NextResponse<ApiResponse<HealthStatus>>> {
       claude_api: {
         status: claude.ok ? "ok" : "down",
         latency_ms: claude.latency_ms,
-        error: claude.ok ? undefined : "API unreachable",
+        error: claude.ok ? undefined : (claude.error ?? "API unreachable"),
       },
       slack: {
         status: slack.ok ? "ok" : "degraded",
