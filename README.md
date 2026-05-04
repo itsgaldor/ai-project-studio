@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Product Studio
 
-## Getting Started
+AI-powered product studio that automates client intake, market discovery, and deliverable generation using Claude AI, Next.js, and Neon PostgreSQL.
 
-First, run the development server:
+---
+
+## What It Does
+
+- **Intake** — Accepts client project briefs via API, generates an AI executive summary instantly
+- **Discovery** — Automatically researches market, competitors, opportunities, and risks using Claude
+- **Deliverables** — Generates PRDs, Technical Specs, Market Analyses, and more on demand
+- **Notifications** — Sends Slack notifications at every key step
+- **Cron** — Auto-runs discovery every 6 hours on new/stale projects
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript (strict) |
+| Database | Neon (serverless PostgreSQL) |
+| AI | Anthropic Claude (claude-opus-4-6) |
+| Notifications | Slack Incoming Webhooks |
+| Hosting | Vercel |
+| Cron | Vercel Cron Jobs |
+
+---
+
+## Project Structure
+
+```
+├── app/api/
+│   ├── health/route.ts          # GET  — System health check
+│   ├── intake/route.ts          # POST — Client intake form
+│   ├── discover/route.ts        # GET/POST — AI discovery
+│   ├── projects/route.ts        # GET/POST — List/create projects
+│   ├── projects/[id]/route.ts   # GET/PATCH/DELETE — Single project
+│   ├── deliverables/route.ts    # GET/POST — List/generate deliverables
+│   └── cron/discovery/route.ts  # GET — Scheduled discovery runner
+├── lib/
+│   ├── types.ts                 # All TypeScript interfaces
+│   ├── db.ts                    # Neon database helpers
+│   ├── claude.ts                # Claude AI integration
+│   └── slack.ts                 # Slack webhook notifications
+├── schema.sql                   # PostgreSQL schema
+├── vercel.json                  # Vercel + Cron config
+└── .env.example                 # Environment variable template
+```
+
+---
+
+## Quick Start
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/itsgaldor/ai-project-studio.git
+cd ai-project-studio
+npm install
+```
+
+### 2. Set up environment
+
+```bash
+cp .env.example .env.local
+# Edit .env.local with your actual keys
+```
+
+Required variables:
+- `DATABASE_URL` — Neon connection string
+- `ANTHROPIC_API_KEY` — From console.anthropic.com
+- `SLACK_WEBHOOK_URL` — From api.slack.com (optional but recommended)
+- `CRON_SECRET` — Random secret for cron security
+
+### 3. Initialize database
+
+```bash
+psql $DATABASE_URL -f schema.sql
+# Or paste schema.sql contents in Neon SQL Editor
+```
+
+### 4. Run locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 5. Test the API
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Health check
+curl http://localhost:3000/api/health
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Submit intake
+curl -X POST http://localhost:3000/api/intake \
+  -H "Content-Type: application/json" \
+  -d '{
+    "client_name": "Acme Corp",
+    "client_email": "cto@acme.com",
+    "project_name": "AI Dashboard",
+    "project_description": "Real-time AI analytics dashboard for e-commerce",
+    "industry": "E-commerce",
+    "problem_statement": "No visibility into customer behavior patterns",
+    "target_users": "E-commerce store owners and analysts",
+    "platform": "web",
+    "key_features": ["Real-time analytics", "AI predictions", "Export reports"],
+    "budget_range": "$50k - $100k",
+    "timeline_weeks": 16
+  }'
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) for the full step-by-step guide.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm i -g vercel
+vercel --prod
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API Documentation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [API.md](./API.md) for full API reference with request/response examples.
+
+---
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DATABASE_URL` | ✅ | Neon PostgreSQL connection string |
+| `ANTHROPIC_API_KEY` | ✅ | Anthropic Claude API key |
+| `SLACK_WEBHOOK_URL` | ⚠️ | Slack incoming webhook URL |
+| `NEXT_PUBLIC_APP_URL` | ✅ | Your app's public URL |
+| `CRON_SECRET` | ✅ | Secret to secure cron endpoint |
+
+---
+
+## License
+
+MIT
