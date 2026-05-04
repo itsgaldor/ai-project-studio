@@ -11,7 +11,6 @@ import type { HealthStatus, ApiResponse } from "@/lib/types";
 const START_TIME = Date.now();
 
 export const dynamic = "force-dynamic";
-export const runtime = "edge";
 
 export async function GET(): Promise<NextResponse<ApiResponse<HealthStatus>>> {
   const timestamp = new Date().toISOString();
