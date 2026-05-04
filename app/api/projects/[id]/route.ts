@@ -128,4 +128,9 @@ export async function DELETE(
     });
   } catch (error) {
     console.error("[Projects/:id DELETE] Error:", error);
-   
+    return NextResponse.json(
+      { success: false, error: "Failed to archive project", meta: { request_id: requestId } },
+      { status: 500 }
+    );
+  }
+}
