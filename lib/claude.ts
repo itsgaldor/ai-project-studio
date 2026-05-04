@@ -12,6 +12,15 @@ import type {
   Project,
 } from "./types";
 
+// ─── Errors ──────────────────────────────────────────────────
+
+export class ClaudeError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ClaudeError";
+  }
+}
+
 // ─── Client ──────────────────────────────────────────────────
 
 let _client: Anthropic | null = null;
@@ -86,7 +95,7 @@ export async function claudeHealthCheck(): Promise<{
     return { ok: true, latency_ms: Date.now() - start };
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
-    console.error('[Claude] healthCheck error:', msg);
+    console.error("[Claude] healthCheck error:", msg);
     return { ok: false, latency_ms: Date.now() - start, error: msg };
   }
 }
@@ -140,6 +149,7 @@ export async function runDiscoveryAnalysis(
 Analyze the provided project information and generate comprehensive discovery data.
 Always respond with valid JSON matching the requested schema exactly.`;
 
+  const now = new Date().toISOString();
   const prompt = `Run a discovery analysis for this AI product project and return a JSON object.
 
 PROJECT: ${project.name}
@@ -166,7 +176,7 @@ Return ONLY a valid JSON object with this exact structure (no markdown, no expla
   "recommended_features": ["feature1", "feature2", "feature3", "feature4", "feature5"],
   "tech_stack_suggestions": ["tech1", "tech2", "tech3"],
   "monetization_models": ["model1", "model2"],
-  "last_run_at": "${new Date().toISOString()}"
+  "last_run_at": "${now}"
 }`;
 
   const response = await claudeChat(
@@ -285,5 +295,3 @@ Context about the project: ${context}`;
     { system, model: DEFAULT_MODEL, max_tokens: 4096 }
   );
 }
-
-// ─
