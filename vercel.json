@@ -4,6 +4,7 @@
   "buildCommand": "npm run build",
   "installCommand": "npm install",
   "devCommand": "npm run dev",
+  "nodeVersion": "20.x",
   "crons": [
     {
       "path": "/api/cron/discovery",
