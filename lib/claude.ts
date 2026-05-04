@@ -83,7 +83,8 @@ export async function claudeHealthCheck(): Promise<{
       { model: FAST_MODEL, max_tokens: 10 }
     );
     return { ok: true, latency_ms: Date.now() - start };
-  } catch {
+  } catch (err) {
+    console.error('[Claude] healthCheck error:', err instanceof Error ? err.message : String(err));
     return { ok: false, latency_ms: Date.now() - start };
   }
 }
@@ -283,11 +284,4 @@ Context about the project: ${context}`;
   );
 }
 
-// ─── Custom Error ────────────────────────────────────────────
-
-export class ClaudeError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "ClaudeError";
-  }
-}
+// ─
