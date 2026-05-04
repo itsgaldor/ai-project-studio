@@ -7,7 +7,7 @@
   "crons": [
     {
       "path": "/api/cron/discovery",
-      "schedule": "0 */6 * * *"
+      "schedule": "0 9 * * *"
     }
   ],
   "headers": [
