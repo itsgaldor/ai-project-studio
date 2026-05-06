@@ -268,11 +268,4 @@ export interface CronJobResult {
   details?: unknown;
 }
 
-// ─── Database ────────────────────────────────────────────────
-
-export interface DbQueryOptions {
-  limit?: number;
-  offset?: number;
-  order_by?: string;
-  order_dir?: "ASC" | "DESC";
-}
+// ─── Database 

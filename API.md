@@ -377,16 +377,4 @@ Authorization: Bearer YOUR_CRON_SECRET
 
 ---
 
-## Error Codes
-
-| HTTP Status | Meaning |
-|-------------|---------|
-| 200 | Success |
-| 201 | Created |
-| 400 | Bad request (missing/invalid parameters) |
-| 401 | Unauthorized (invalid cron secret) |
-| 404 | Resource not found |
-| 422 | Validation error |
-| 500 | Internal server error |
-| 502 | Upstream service error (Claude API failure) |
-| 503 | Service unavailable (database down) |
+## Error 

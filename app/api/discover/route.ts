@@ -128,8 +128,3 @@ export async function POST(
   } catch (error) {
     console.error("[Discover POST] Error:", error);
     return NextResponse.json(
-      { success: false, error: "Discovery analysis failed", meta: { request_id: requestId } },
-      { status: 500 }
-    );
-  }
-}

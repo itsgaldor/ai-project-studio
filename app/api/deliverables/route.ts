@@ -230,16 +230,4 @@ async function generateGenericDeliverable(
     [
       {
         role: "user",
-        content: `Write a comprehensive ${label} for the following project:
-
-PROJECT NAME: ${projectName}
-DESCRIPTION: ${description}
-
-Be thorough, professional, and production-ready.`,
-      },
-    ],
-    { model: DEFAULT_MODEL, max_tokens: 4096 }
-  );
-
-  return response.content;
-}
+        content: `Write a comprehensive ${label} for

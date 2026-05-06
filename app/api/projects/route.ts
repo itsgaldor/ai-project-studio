@@ -150,7 +150,4 @@ function validateProjectCreate(data: Partial<ProjectCreateInput>): string[] {
 // See: app/api/projects/[id]/route.ts
 //
 // Alternatively, export a named handler here and use segment config.
-// The handlers below cover /api/projects/[id] if you use the
-// catch-all pattern via middleware or a wrapper.
-//
-// For a standard Next.js setup, create app/api/projects/[id]/route.ts
+// The handlers below cover /api/p

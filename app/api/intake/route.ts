@@ -125,9 +125,4 @@ function validateIntakeForm(data: Partial<IntakeFormData>): {
     errors.push("key_features must be a non-empty array");
   }
 
-  return { valid: errors.length === 0, errors };
-}
-
-function isValidEmail(email: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+  return { valid: errors.l

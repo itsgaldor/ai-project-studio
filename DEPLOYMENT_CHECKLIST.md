@@ -213,13 +213,3 @@ vercel alias set DEPLOYMENT_URL your-project.vercel.app
 ```
 
 ---
-
-## Done!
-
-Your AI Product Studio is live. Share the intake API endpoint with clients:
-
-```
-POST https://your-project.vercel.app/api/intake
-```
-
-Or embed the intake form in your website pointing to this endpoint.

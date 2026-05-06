@@ -157,6 +157,4 @@ FROM projects p
 LEFT JOIN deliverables d ON d.project_id = p.id
 GROUP BY p.id;
 
--- ─── Done ────────────────────────────────────────────────────
-
-SELECT 'Schema initialized successfully' AS message;
+-- ─── Done ─────────────────�
