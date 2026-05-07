@@ -238,4 +238,11 @@ function sanitizeIdentifier(name: string): string {
   return name;
 }
 
-// ─── Custom Error ─────────�
+// ─── Custom Error ────────────────────────────────────────────
+
+export class DatabaseError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "DatabaseError";
+  }
+}

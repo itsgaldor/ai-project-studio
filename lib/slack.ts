@@ -243,3 +243,15 @@ function getEventTitle(event: SlackEventType): string {
     "deliverable.generated": "Deliverable Generated",
     "deliverable.approved": "Deliverable Approved",
     "error.critical": "Critical Error",
+  };
+  return map[event] ?? event;
+}
+
+function getSeverityColor(severity: string): string {
+  const map: Record<string, string> = {
+    info: "#36a64f",
+    warning: "#ffcc00",
+    error: "#ff0000",
+  };
+  return map[severity] ?? "#36a64f";
+}
