@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
-    "db:push": "psql $DATABASE_URL -f schema.sql"
+    "db:push": "psql $DATABASE_URL -f schema.sql",
+    "seed": "npx tsx scripts/seed.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.0",
