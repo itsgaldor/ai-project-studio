@@ -268,6 +268,35 @@ export interface CronJobResult {
   details?: unknown;
 }
 
+// ─── Proposals ───────────────────────────────────────────────
+
+export type ProposalTone = "formal" | "casual" | "technical";
+
+export interface ProposalSection {
+  title: string;
+  content: string;
+  key_features?: string[];
+  metrics?: string[];
+  deliverables?: string[];
+  timeline_weeks?: number;
+}
+
+export interface ProposalPricing {
+  tier: string;
+  price: number;
+  description: string;
+  includes: string[];
+}
+
+export interface ProposalContent {
+  title: string;
+  executive_summary: string;
+  sections: ProposalSection[];
+  pricing: ProposalPricing[];
+  terms: string;
+  next_steps: string;
+}
+
 // ─── Database ────────────────────────────────────────────────
 
 export interface DbQueryOptions {
